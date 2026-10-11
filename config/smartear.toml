@@ -6,7 +6,7 @@ type = "Organization"
 legal_form = "주식회사"
 name = "스마트이어 주식회사"
 name_en = "SmartEar Co., Ltd."
-alternate_names = ["스마트이어", "(주)스마트이어", "SmartEar", "스마트 이어"]
+alternate_names = ["스마트이어", "(주)스마트이어", "SmartEar", "SmartEar Korea", "스마트 이어"]
 keywords = ["제조 AX", "제조 AI", "AI 에이전트", "AI 전환", "스마트팩토리 AI", "대구 제조 AI", "경북 제조 AI"]
 tagline = "제조 현장의 AI 전환(AX)을 AI 에이전트로 완성합니다"
 description = "스마트이어 주식회사는 2024년부터 제조 AX(AI Transformation)와 AI 에이전트로 대구·경북 중견·중소 제조기업의 업무를 고도화하는 AI 전환 파트너입니다."
@@ -61,7 +61,7 @@ q = "스마트이어는 어떻게 일하나요?"
 a = "업무분장 안에서의 자율성, 격식 있는 태도, 활발한 의사소통을 원칙으로 영업 출장을 제외하고 전 구성원이 전면 재택으로 일합니다."
 
 [monitor]
-queries = ["스마트이어 주식회사", "스마트이어", "(주)스마트이어", "SmartEar"]
+queries = ["스마트이어 주식회사", "스마트이어", "(주)스마트이어", "SmartEar Co., Ltd.", "SmartEar Korea"]
 # 회사 관련 부정 신호 (채용·노무·거래 중심)
 negative_keywords = ["사기", "고소", "소송", "체불", "임금", "갑질", "퇴사", "블랙", "폐업", "부도", "논란", "허위", "연락두절"]
 positive_keywords = ["수상", "선정", "협약", "투자 유치", "성장", "채용", "인증", "특허", "AX", "AI 에이전트", "도입 사례"]
