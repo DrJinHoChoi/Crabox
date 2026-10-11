@@ -2,3 +2,5 @@ site/
 reports/
 __pycache__/
 *.pyc
+data/*.csv
+!data/*.sample.csv
