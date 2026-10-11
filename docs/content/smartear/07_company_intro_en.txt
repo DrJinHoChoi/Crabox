@@ -1,8 +1,8 @@
 [LinkedIn tagline — max 120 chars]
-SmartEar (스마트이어) | Manufacturing AX with AI agents for small and mid-sized manufacturers in Korea
+SmartEar (스마트이어) | Daegu-based AI startup — Manufacturing AX with AI agents for Korean manufacturers
 
 [About — LinkedIn / English website]
-SmartEar Co., Ltd. (스마트이어 주식회사) is a Korean AI transformation partner for manufacturers.
+SmartEar Co., Ltd. (스마트이어 주식회사) is a Daegu-based manufacturing AI startup and AI transformation partner for manufacturers in Korea.
 
 In 2024, SmartEar refocused its business on Manufacturing AX (AI Transformation) and AI agents. Today we work with small and mid-sized manufacturers in the Daegu–Gyeongbuk region of Korea, designing AI transformation that fits each factory floor.
 
@@ -28,5 +28,5 @@ Contact: contact@smartear.co.kr
 [LinkedIn page fields]
 - Company name: SmartEar Co., Ltd. (스마트이어 주식회사)
 - Industry: IT Services and IT Consulting
-- Specialties: Manufacturing AX, AI Transformation, AI Agents, Smart Factory AI, 제조 AX, AI 에이전트
-- Headquarters: [City], South Korea  ← 실제 본사 소재지로 수정
+- Specialties: Manufacturing AI Startup, Manufacturing AX, AI Transformation, AI Agents, Smart Factory AI, 제조 AX, AI 에이전트
+- Headquarters: Daegu, South Korea

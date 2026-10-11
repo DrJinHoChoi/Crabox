@@ -7,16 +7,16 @@ legal_form = "주식회사"
 name = "스마트이어 주식회사"
 name_en = "SmartEar Co., Ltd."
 alternate_names = ["스마트이어", "(주)스마트이어", "SmartEar", "SmartEar Korea", "스마트 이어"]
-keywords = ["제조 AX", "제조 AI", "AI 에이전트", "AI 전환", "스마트팩토리 AI", "대구 제조 AI", "경북 제조 AI"]
+keywords = ["제조 AX", "제조 AI", "AI 에이전트", "AI 전환", "스마트팩토리 AI", "대구 제조 AI", "경북 제조 AI", "대구 AI 스타트업", "제조 AI 스타트업"]
 tagline = "제조 현장의 AI 전환(AX)을 AI 에이전트로 완성합니다"
-description = "스마트이어 주식회사는 2024년부터 제조 AX(AI Transformation)와 AI 에이전트로 대구·경북 중견·중소 제조기업의 업무를 고도화하는 AI 전환 파트너입니다."
+description = "스마트이어 주식회사는 대구에 본사를 둔 제조 AI 스타트업으로, 2024년부터 제조 AX(AI Transformation)와 AI 에이전트로 대구·경북 중견·중소 제조기업의 업무를 고도화하는 AI 전환 파트너입니다."
 founded = "2020-01-01"            # TODO 법인 설립일 (사업 전환: 2024년)
 ceo = "대표자명"                   # TODO
 business_number = "000-00-00000"   # TODO
 email = "contact@smartear.co.kr"
 phone = "+82-2-0000-0000"          # TODO
 address_street = "도로명 주소"      # TODO
-address_locality = "서울특별시"     # TODO
+address_locality = "대구광역시"
 postal_code = "00000"              # TODO
 
 [site]
