@@ -4,12 +4,13 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from monitor.brand_monitor import classify, clean, write_reports
+from monitor.brand_monitor import classify, clean, is_legacy, write_reports
 from seo.generate_site import build_jsonld, generate, load_config, render_html, render_sitemap
 
 CONFIG = Path(__file__).resolve().parent.parent / "config"
 SMARTEAR = load_config(CONFIG / "smartear.toml")
 DATAPD = load_config(CONFIG / "datapd.toml")
+DRCHOI = load_config(CONFIG / "drchoistudio.toml")
 
 
 def jsonld_types(page):
@@ -53,6 +54,43 @@ class SiteTest(unittest.TestCase):
                 generate(CONFIG / cfg, d)
             self.assertTrue((Path(d) / "smartear" / "index.html").exists())
             self.assertTrue((Path(d) / "datapd" / "sitemap.xml").exists())
+
+
+class DrChoiStudioTest(unittest.TestCase):
+    def test_official_url_is_canonical(self):
+        page = render_html(DRCHOI)
+        self.assertIn('<link rel="canonical" href="https://drchoistudio.datapd.ai/">', page)
+        self.assertNotIn("<h2>서비스</h2>", page)  # 서비스 미입력 시 빈 섹션 없음
+        self.assertEqual(build_jsonld(DRCHOI)[0]["@type"], "Brand")
+
+    def test_legacy_redirect_only_when_listed(self):
+        with tempfile.TemporaryDirectory() as d:
+            generate(CONFIG / "drchoistudio.toml", d)
+            self.assertEqual(bool(DRCHOI["site"]["legacy_urls"]), (Path(d) / "drchoistudio" / "legacy_redirect.html").exists())
+            cfg_path = Path(d) / "c.toml"
+            cfg_path.write_text(
+                (CONFIG / "drchoistudio.toml").read_text(encoding="utf-8")
+                .replace("legacy_urls = []", 'legacy_urls = ["https://old.example.com"]'), encoding="utf-8")
+            generate(cfg_path, d)
+            page = (Path(d) / "drchoistudio" / "legacy_redirect.html").read_text(encoding="utf-8")
+            self.assertIn('url=https://drchoistudio.datapd.ai/', page)
+            self.assertIn('content="noindex, follow"', page)
+
+    def test_is_legacy(self):
+        legacy = ["https://old-drchoi.example.com", "blog.example.com/drchoi"]
+        self.assertTrue(is_legacy("https://www.old-drchoi.example.com/price", legacy))
+        self.assertTrue(is_legacy("https://m.old-drchoi.example.com/", legacy))
+        self.assertTrue(is_legacy("https://blog.example.com/drchoi/123", legacy))
+        self.assertFalse(is_legacy("https://blog.example.com/someoneelse", legacy))
+        self.assertFalse(is_legacy("https://blog.example.com/drchoi2", legacy))
+        self.assertFalse(is_legacy("https://drchoistudio.datapd.ai/", legacy))
+
+    def test_report_lists_legacy_hits(self):
+        row = {"분류": "중립", "채널": "웹문서", "검색어": "최박사 사진관", "제목": "최박사 사진관", "요약": "",
+               "링크": "https://old-drchoi.example.com/", "날짜": "", "매칭키워드": "", "구버전": "Y", "권장대응": ""}
+        with tempfile.TemporaryDirectory() as d:
+            _, md, _ = write_reports([row], d, "drchoistudio", "최박사 사진관")
+            self.assertIn("## 예전(중복) 사이트 노출", md.read_text(encoding="utf-8"))
 
 
 class MonitorTest(unittest.TestCase):

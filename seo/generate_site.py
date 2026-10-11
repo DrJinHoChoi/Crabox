@@ -6,6 +6,7 @@
   index.html   - title/description/OG 메타, schema.org JSON-LD(Organization|Brand, WebSite, FAQPage)
   robots.txt   - 크롤링 허용 + sitemap 위치
   sitemap.xml  - 네이버 서치어드바이저 / 구글 서치콘솔 제출용
+  legacy_redirect.html - site.legacy_urls 가 있을 때만. 예전(중복) 사이트에 올려 공식 주소로 보내는 페이지
 
 사용법:
   python -m seo.generate_site                       # config/*.toml 전부 (스마트이어, 데이터피디 각각)
@@ -105,6 +106,8 @@ def render_html(cfg):
     services = "\n".join(
         f'      <li><h3>{e(sv["name"])}</h3><p>{e(sv["description"])}</p></li>' for sv in cfg.get("services", [])
     )
+    if services:
+        services = f"  <section>\n    <h2>서비스</h2>\n    <ul>\n{services}\n    </ul>\n  </section>\n"
     faqs = "\n".join(
         f'      <details><summary>{e(f["q"])}</summary><p>{e(f["a"])}</p></details>' for f in cfg.get("faq", [])
     )
@@ -152,13 +155,7 @@ def render_html(cfg):
     <p><strong>{e(c["tagline"])}</strong></p>
     <p>{e(desc)}</p>
   </header>
-  <section>
-    <h2>서비스</h2>
-    <ul>
-{services}
-    </ul>
-  </section>
-  <section>
+{services}  <section>
     <h2>자주 묻는 질문</h2>
 {faqs}
   </section>
@@ -183,6 +180,25 @@ def render_sitemap(cfg, pages=("/",)):
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n'
 
 
+def render_legacy_redirect(cfg):
+    """예전 사이트 자리에 올리는 이동 페이지. 서버 301 리디렉션을 못 쓰는 호스팅용 차선책."""
+    c, url = cfg["company"], html.escape(cfg["site"]["url"] + "/")
+    return f"""<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>{html.escape(c["name"])} — 공식 사이트로 이동</title>
+  <link rel="canonical" href="{url}">
+  <meta name="robots" content="noindex, follow">
+  <meta http-equiv="refresh" content="0; url={url}">
+</head>
+<body>
+  <p>이 주소는 예전 버전입니다. {html.escape(c["name"])} 공식 사이트: <a href="{url}">{url}</a></p>
+</body>
+</html>
+"""
+
+
 def generate(config_path, out_root):
     cfg = load_config(config_path)
     out = Path(out_root) / cfg["slug"]
@@ -190,6 +206,8 @@ def generate(config_path, out_root):
     (out / "index.html").write_text(render_html(cfg), encoding="utf-8")
     (out / "robots.txt").write_text(render_robots(cfg), encoding="utf-8")
     (out / "sitemap.xml").write_text(render_sitemap(cfg), encoding="utf-8")
+    if cfg["site"].get("legacy_urls"):
+        (out / "legacy_redirect.html").write_text(render_legacy_redirect(cfg), encoding="utf-8")
     return cfg["company"]["name"], out
 
 

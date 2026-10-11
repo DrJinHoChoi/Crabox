@@ -6,6 +6,7 @@
 |---|---|
 | `config/smartear.toml` | 스마트이어 주식회사(법인) 정보·채널·모니터링 키워드 |
 | `config/datapd.toml` | 데이터피디(개인사업자) 정보·채널·모니터링 키워드 |
+| `config/drchoistudio.toml` | 최박사 사진관 — 공식 사이트 `drchoistudio.datapd.ai`, 예전(중복) 사이트 목록 `legacy_urls` |
 | `seo/generate_site.py` | SEO 메타태그 + schema.org JSON-LD 포함 공식 랜딩 페이지, robots.txt, sitemap.xml을 `site/<slug>/`에 엔티티별 생성 |
 | `monitor/brand_monitor.py` | 네이버 검색 API로 브랜드 언급 수집 → 부정/긍정/중립 분류 리포트를 `reports/<slug>/`에 엔티티별 생성 |
 | `jobplanet/review_analyzer.py` | 잡플래닛 리뷰(CSV)를 과거 vs 최근으로 분석, 미답변 리뷰 답변 초안 생성 |

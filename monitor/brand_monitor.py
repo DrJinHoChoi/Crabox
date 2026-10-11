@@ -37,6 +37,7 @@ ACTIONS = {
     "긍정": "작성자 동의 하에 공식 채널에서 인용·감사 인사",
     "중립": "기록만",
 }
+LEGACY_ACTION = "예전(중복) 사이트 노출 → 301 리디렉션 또는 이동 페이지 적용, 불가하면 사이트 삭제 후 검색 결과 삭제 요청"
 
 _TAG = re.compile(r"<[^>]+>")
 
@@ -56,6 +57,22 @@ def classify(text, negative_keywords, positive_keywords):
     return "중립", []
 
 
+def _split(url):
+    parts = urllib.parse.urlsplit(url if "//" in url else f"//{url}")
+    return (parts.hostname or "").removeprefix("www."), parts.path.rstrip("/")
+
+
+def is_legacy(link, legacy_urls):
+    """링크가 config 의 site.legacy_urls(예전 중복 사이트) 중 하나에 속하면 True.
+    도메인은 하위 도메인까지, 경로가 있는 주소(예: 공용 플랫폼의 개인 페이지)는 그 경로 아래만 일치로 본다."""
+    h, path = _split(link)
+    for u in legacy_urls:
+        lh, lpath = _split(u)
+        if (h == lh or h.endswith("." + lh)) and (path == lpath or path.startswith(lpath + "/")):
+            return True
+    return False
+
+
 def naver_search(url, query, client_id, client_secret, display=100):
     qs = urllib.parse.urlencode({"query": query, "display": display, "sort": "date"})
     req = urllib.request.Request(f"{url}?{qs}", headers={
@@ -68,6 +85,7 @@ def naver_search(url, query, client_id, client_secret, display=100):
 
 def collect(cfg, client_id, client_secret):
     mon = cfg["monitor"]
+    legacy = cfg.get("site", {}).get("legacy_urls", [])
     seen, rows = set(), []
     for query in mon["queries"]:
         for source, url in NAVER_ENDPOINTS.items():
@@ -82,11 +100,13 @@ def collect(cfg, client_id, client_secret):
                     continue
                 seen.add(link)
                 title, desc = clean(it.get("title")), clean(it.get("description"))
+                old = is_legacy(link, legacy)
                 label, hits = classify(f"{title} {desc}", mon["negative_keywords"], mon["positive_keywords"])
                 rows.append({
                     "분류": label, "채널": source, "검색어": query, "제목": title, "요약": desc[:200],
                     "링크": link, "날짜": it.get("postdate") or it.get("pubDate", ""),
-                    "매칭키워드": ",".join(hits), "권장대응": ACTIONS[label],
+                    "매칭키워드": ",".join(hits), "구버전": "Y" if old else "",
+                    "권장대응": LEGACY_ACTION if old else ACTIONS[label],
                 })
     order = {"부정": 0, "긍정": 1, "중립": 2}
     rows.sort(key=lambda r: order[r["분류"]])
@@ -111,6 +131,11 @@ def write_reports(rows, out_dir, slug, name):
         lines += ["## 대응 검토 필요 (부정 신호)", "", "| 채널 | 제목 | 키워드 | 링크 |", "|---|---|---|---|"]
         lines += [f'| {r["채널"]} | {r["제목"].replace("|", "/")} | {r["매칭키워드"]} | {r["링크"]} |' for r in neg]
         lines += ["", f"권장 대응: {ACTIONS['부정']}", "", "자세한 절차는 docs/SEO_PLAYBOOK.md 의 '부정 콘텐츠 대응' 참고."]
+    old = [r for r in rows if r.get("구버전")]
+    if old:
+        lines += ["", "## 예전(중복) 사이트 노출", "", "| 채널 | 제목 | 링크 |", "|---|---|---|"]
+        lines += [f'| {r["채널"]} | {r["제목"].replace("|", "/")} | {r["링크"]} |' for r in old]
+        lines += ["", f"권장 대응: {LEGACY_ACTION}", "", "자세한 절차는 docs/SEO_PLAYBOOK.md 의 '중복 사이트 정리' 참고."]
     md_path = out / f"brand_report_{stamp}.md"
     md_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return csv_path, md_path, counts

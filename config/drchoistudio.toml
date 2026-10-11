@@ -1,0 +1,31 @@
+# 최박사 사진관 — 공식 사이트는 drchoistudio.datapd.ai 하나뿐. TODO 항목을 실제 값으로 수정
+slug = "drchoistudio"
+
+[company]
+type = "Brand"
+name = "최박사 사진관"
+name_en = "Dr. Choi Studio"
+alternate_names = ["최박사사진관", "Dr.Choi Studio", "drchoistudio"]
+tagline = "최박사 사진관 공식 사이트"   # TODO
+description = "최박사 사진관의 공식 사이트는 drchoistudio.datapd.ai 입니다."  # TODO 서비스 소개 문장
+
+[site]
+url = "https://drchoistudio.datapd.ai"
+logo = "https://drchoistudio.datapd.ai/logo.png"     # TODO 실제 경로
+og_image = "https://drchoistudio.datapd.ai/og.png"   # TODO 실제 경로
+naver_site_verification = ""
+google_site_verification = ""
+same_as = []   # 최박사 사진관 공식 채널
+# 예전에 구현했던 중복 사이트 주소 (더 이상 운영하지 않음).
+# 여기에 넣으면 모니터링 리포트에서 '구버전 노출'로 따로 표시되고,
+# site/drchoistudio/legacy_redirect.html (예전 주소에 올릴 이동 페이지)이 생성된다.
+legacy_urls = []   # TODO 예: ["https://old-drchoi.example.com"]
+
+[[faq]]
+q = "최박사 사진관 공식 사이트는 어디인가요?"
+a = "공식 사이트는 drchoistudio.datapd.ai 하나뿐입니다. 인터넷에 보이는 다른 주소는 예전 버전으로, 더 이상 운영하지 않습니다."
+
+[monitor]
+queries = ["최박사 사진관", "최박사사진관", "drchoistudio"]
+negative_keywords = ["사기", "피해", "환불", "먹튀", "불만", "최악", "후기 안좋", "주의", "연락두절", "과장", "허위"]
+positive_keywords = ["추천", "만족", "후기 좋", "예쁘", "잘 나왔"]
