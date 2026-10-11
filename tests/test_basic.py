@@ -17,19 +17,25 @@ def jsonld_types(page):
 
 
 class SiteTest(unittest.TestCase):
-    def test_smartear_is_organization_linked_to_brand(self):
+    def test_smartear_is_organization(self):
         org = build_jsonld(SMARTEAR)[0]
         self.assertEqual((org["@type"], org["name"]), ("Organization", "스마트이어 주식회사"))
-        self.assertNotIn("데이터피디", org["alternateName"])  # 이름은 섞지 않고 관계로만 연결
-        self.assertEqual(org["brand"][0]["name"], "데이터피디")
         self.assertIn("taxID", org)
 
     def test_datapd_is_brand_without_company_fields(self):
         brand = build_jsonld(DATAPD)[0]
         self.assertEqual((brand["@type"], brand["name"]), ("Brand", "데이터피디"))
-        self.assertNotIn("스마트이어", " ".join(brand["alternateName"]))
         self.assertNotIn("taxID", brand)
-        self.assertEqual(brand["subjectOf"][0]["name"], "스마트이어 주식회사")
+
+    def test_identities_are_independent(self):
+        # 어느 쪽 페이지에도 상대 엔티티의 이름·도메인이 나오지 않아야 함
+        pairs = [(SMARTEAR, DATAPD), (DATAPD, SMARTEAR)]
+        for cfg, other in pairs:
+            page = render_html(cfg)
+            for token in [other["company"]["name"], other["company"]["name_en"], other["site"]["url"]]:
+                self.assertNotIn(token, page)
+            for key in ("brand", "parentOrganization", "subOrganization", "subjectOf"):
+                self.assertNotIn(key, build_jsonld(cfg)[0])
 
     def test_titles_are_separate(self):
         self.assertIn("<title>스마트이어 주식회사(SmartEar Co., Ltd.) 공식 홈페이지</title>", render_html(SMARTEAR))

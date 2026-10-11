@@ -25,11 +25,6 @@ naver_site_verification = ""
 google_site_verification = ""
 same_as = []   # 회사 공식 채널 (블로그, 링크드인, 기업정보 플랫폼 등)
 
-# 이 회사가 운영하는 브랜드 — 검색엔진에 관계만 알려주고, 노출은 각자 따로
-[[related]]
-relation = "brand"
-name = "데이터피디"
-url = "https://www.datapd.example"          # TODO
 
 [[services]]
 name = "TODO 사업 1"

@@ -1,5 +1,7 @@
 """config/*.toml 을 읽어 엔티티(회사/브랜드)별로 검색엔진 최적화된 공식 랜딩 페이지를 따로 생성한다.
 
+각 엔티티는 검색엔진에 완전히 독립된 정체성으로 알린다 (상호 링크·관계 속성 없음).
+
 생성물 (site/<slug>/):
   index.html   - title/description/OG 메타, schema.org JSON-LD(Organization|Brand, WebSite, FAQPage)
   robots.txt   - 크롤링 허용 + sitemap 위치
@@ -16,10 +18,6 @@ import json
 import tomllib
 from datetime import date
 from pathlib import Path
-
-# related.relation → schema.org 속성
-RELATION_PROPS = {"brand": "brand", "parent": "parentOrganization", "sub": "subOrganization"}
-
 
 def load_config(path):
     with open(path, "rb") as f:
@@ -61,12 +59,6 @@ def build_jsonld(cfg):
                 {"@type": "Offer", "itemOffered": {"@type": "Service", "name": sv["name"], "description": sv["description"]}}
                 for sv in cfg["services"]
             ]
-    for r in cfg.get("related", []):
-        prop = RELATION_PROPS[r["relation"]]
-        if prop == "parentOrganization" and is_brand:
-            prop = "subjectOf"  # Brand 에는 parentOrganization 이 없어 운영 주체를 subjectOf 로 연결
-        node = {"@type": "Brand" if r["relation"] == "brand" else "Organization", "name": r["name"], "url": r["url"]}
-        entity.setdefault(prop, []).append(node)
 
     website = {
         "@context": "https://schema.org",
@@ -111,10 +103,6 @@ def render_html(cfg):
     )
     faqs = "\n".join(
         f'      <details><summary>{e(f["q"])}</summary><p>{e(f["a"])}</p></details>' for f in cfg.get("faq", [])
-    )
-    labels = {"brand": "운영 브랜드", "parent": "운영사", "sub": "자회사"}
-    related = " · ".join(
-        f'{labels[r["relation"]]} <a href="{e(r["url"])}">{e(r["name"])}</a>' for r in cfg.get("related", [])
     )
     footer = [e(c["name"]) + (f' ({e(c["name_en"])})' if c.get("name_en") else "")]
     if c.get("ceo"):
@@ -171,7 +159,6 @@ def render_html(cfg):
   <footer>
     <p>{" · ".join(footer)}</p>
     <p>{" · ".join(e(x) for x in contact)}</p>
-    <p>{related}</p>
   </footer>
 </body>
 </html>

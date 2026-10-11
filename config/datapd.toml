@@ -19,10 +19,6 @@ naver_site_verification = ""
 google_site_verification = ""
 same_as = []   # 브랜드 공식 채널 (네이버 블로그, 유튜브, 인스타그램 등)
 
-[[related]]
-relation = "parent"
-name = "스마트이어 주식회사"
-url = "https://www.smartear.example"        # TODO
 
 [[services]]
 name = "데이터 기반 콘텐츠 기획"
