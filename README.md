@@ -10,6 +10,7 @@
 | `monitor/brand_monitor.py` | 네이버 검색 API로 브랜드 언급 수집 → 부정/긍정/중립 분류 리포트를 `reports/<slug>/`에 엔티티별 생성 |
 | `jobplanet/review_analyzer.py` | 잡플래닛 리뷰(CSV)를 과거 vs 최근으로 분석, 미답변 리뷰 답변 초안 생성 |
 | `docs/JOBPLANET_PLAYBOOK.md` | 잡플래닛 5년 전 이미지 탈피 전략 |
+| `docs/content/smartear/` | 스마트이어 현재 모습(제조 AX·AI 에이전트) 콘텐츠 초안: 잡플래닛 소개, 영업 채용공고, 블로그, 리뷰 답변 |
 | `docs/SEO_PLAYBOOK.md` | 단계별 상위 노출 전략 + 부정 콘텐츠의 합법적 대응 절차 |
 
 ```bash

@@ -41,6 +41,8 @@ def build_jsonld(cfg):
         "description": c["description"],
         "sameAs": s.get("same_as", []),
     }
+    if c.get("keywords"):
+        entity["knowsAbout"] = c["keywords"]
     optional = {"foundingDate": "founded", "taxID": "business_number", "email": "email", "telephone": "phone"}
     if c.get("legal_form"):
         entity["legalName"] = c["name"]
@@ -88,7 +90,7 @@ def render_html(cfg):
     e = html.escape
     title = f'{c["name"]}({c["name_en"]}) 공식 홈페이지' if c.get("name_en") else f'{c["name"]} 공식 홈페이지'
     desc = c["description"]
-    keywords = ", ".join([c["name"], *_names(c)])
+    keywords = ", ".join([c["name"], *_names(c), *c.get("keywords", [])])
 
     verify = ""
     if s.get("naver_site_verification"):
