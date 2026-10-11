@@ -1,19 +1,16 @@
-import tomllib
 import unittest
 from datetime import date
 from pathlib import Path
 
-from jobplanet.review_analyzer import analyze, draft_reply, load_reviews, render_report
+from jobplanet.review_analyzer import DEFAULT_THEMES, analyze, draft_reply, load_reviews, render_report
 
 ROOT = Path(__file__).resolve().parent.parent
-with open(ROOT / "config" / "smartear.toml", "rb") as f:
-    JP = tomllib.load(f)["jobplanet"]
 
 
 class JobplanetTest(unittest.TestCase):
     def setUp(self):
         self.reviews = load_reviews(ROOT / "data" / "jobplanet_reviews.sample.csv")
-        self.res = analyze(self.reviews, JP["themes"], 2, today=date(2026, 10, 11))
+        self.res = analyze(self.reviews, DEFAULT_THEMES, 2, today=date(2026, 10, 11))
 
     def test_period_split(self):
         self.assertEqual(self.res["period_n"], {"과거": 3, "최근": 3})

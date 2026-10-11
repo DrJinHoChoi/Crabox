@@ -12,7 +12,8 @@
   - 기업 답변이 없는 리뷰 목록 + 주제별 답변 초안 (실제 개선 사항을 채워 넣어야 함)
 
 사용법:
-  python -m jobplanet.review_analyzer data/jobplanet_reviews.csv [--config config/smartear.toml]
+  python -m jobplanet.review_analyzer data/jobplanet_reviews.csv                              # 스마트이어
+  python -m jobplanet.review_analyzer data/datapd_reviews.csv --config config/datapd.toml     # 데이터피디
 """
 
 import argparse
@@ -21,6 +22,18 @@ import tomllib
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
+
+# 리뷰 단점 문장에서 탐지할 주제 키워드 (config 의 [jobplanet.themes] 로 덮어쓸 수 있음)
+DEFAULT_THEMES = {
+    "연봉·보상": ["연봉", "급여", "월급", "보상", "인상", "성과급", "인센"],
+    "야근·워라밸": ["야근", "워라밸", "칼퇴", "주말", "초과근무", "업무량"],
+    "경영진·리더십": ["대표", "경영진", "임원", "오너", "독단", "비전"],
+    "조직문화·소통": ["소통", "문화", "분위기", "갑질", "수평", "꼰대", "눈치"],
+    "체계·프로세스": ["체계", "시스템", "프로세스", "주먹구구", "업무분장", "인수인계"],
+    "성장·교육": ["성장", "교육", "배울", "커리어", "역량"],
+    "고용안정·이직률": ["퇴사", "이직", "물갈이", "안정", "권고사직"],
+    "복지": ["복지", "식대", "휴가", "연차", "장비", "재택"],
+}
 
 # 주제별 답변 초안 — {개선사항} 은 반드시 '실제로 바뀐 사실'로 채운다 (허위 기재 금지)
 REPLY_TEMPLATES = {
@@ -130,13 +143,14 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("csv")
     ap.add_argument("--config", default="config/smartear.toml")
-    ap.add_argument("--out", default="reports/jobplanet")
+    ap.add_argument("--out", default="reports")
     args = ap.parse_args()
 
     with open(args.config, "rb") as f:
-        jp = tomllib.load(f)["jobplanet"]
-    res = analyze(load_reviews(args.csv), jp["themes"], jp.get("recent_years", 2))
-    out = Path(args.out)
+        cfg = tomllib.load(f)
+    jp = cfg.get("jobplanet", {})
+    res = analyze(load_reviews(args.csv), jp.get("themes", DEFAULT_THEMES), jp.get("recent_years", 2))
+    out = Path(args.out) / cfg["slug"] / "jobplanet"
     out.mkdir(parents=True, exist_ok=True)
     path = out / f"jobplanet_report_{date.today():%Y%m%d}.md"
     path.write_text(render_report(res), encoding="utf-8")

@@ -1,15 +1,22 @@
-# 데이터피디 (브랜드/서비스) — TODO 항목을 실제 값으로 수정
+# 데이터피디 (개인사업자, 스마트이어 주식회사와 별개 사업자) — TODO 항목을 실제 값으로 수정
 slug = "datapd"
 
 [company]
-type = "Brand"
+type = "Organization"
+legal_form = "개인사업자"
 name = "데이터피디"
 name_en = "DataPD"
 alternate_names = ["DataPD", "데이터PD", "데이터 피디"]
 tagline = "데이터로 기획하고 성과로 증명합니다"   # TODO
 description = "데이터피디(DataPD)는 데이터 기반 콘텐츠·마케팅 기획 서비스입니다."  # TODO
+founded = "2020-01-01"            # TODO 개업일
+ceo = "대표자명"                   # TODO
+business_number = "000-00-00000"   # TODO 개인사업자 사업자등록번호
 email = "hello@datapd.example"     # TODO
 phone = "+82-2-0000-0000"          # TODO
+address_street = "도로명 주소"      # TODO
+address_locality = "서울특별시"     # TODO
+postal_code = "00000"              # TODO
 
 [site]
 url = "https://www.datapd.example"          # TODO 브랜드 도메인
@@ -17,7 +24,7 @@ logo = "https://www.datapd.example/logo.png"
 og_image = "https://www.datapd.example/og.png"
 naver_site_verification = ""
 google_site_verification = ""
-same_as = []   # 브랜드 공식 채널 (네이버 블로그, 유튜브, 인스타그램 등)
+same_as = []   # 데이터피디 공식 채널 (네이버 블로그, 유튜브, 인스타그램 등)
 
 
 [[services]]
@@ -38,3 +45,7 @@ queries = ["데이터피디", "DataPD", "데이터PD"]
 # 서비스·고객 관련 부정 신호
 negative_keywords = ["사기", "피해", "환불", "먹튀", "불만", "최악", "후기 안좋", "주의", "연락두절", "과장", "허위", "효과 없"]
 positive_keywords = ["추천", "만족", "성과", "후기 좋", "재계약", "효과"]
+
+# 데이터피디 자체 사업자로 잡플래닛 페이지가 있는 경우에만 사용
+[jobplanet]
+recent_years = 2

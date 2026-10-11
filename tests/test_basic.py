@@ -22,10 +22,11 @@ class SiteTest(unittest.TestCase):
         self.assertEqual((org["@type"], org["name"]), ("Organization", "스마트이어 주식회사"))
         self.assertIn("taxID", org)
 
-    def test_datapd_is_brand_without_company_fields(self):
-        brand = build_jsonld(DATAPD)[0]
-        self.assertEqual((brand["@type"], brand["name"]), ("Brand", "데이터피디"))
-        self.assertNotIn("taxID", brand)
+    def test_datapd_is_separate_sole_proprietorship(self):
+        biz = build_jsonld(DATAPD)[0]
+        self.assertEqual((biz["@type"], biz["legalName"]), ("Organization", "데이터피디"))
+        self.assertIn("taxID", biz)  # 자체 사업자등록번호
+        self.assertIn("개인사업자", render_html(DATAPD))
 
     def test_identities_are_independent(self):
         # 어느 쪽 페이지에도 상대 엔티티의 이름·도메인이 나오지 않아야 함
@@ -41,7 +42,7 @@ class SiteTest(unittest.TestCase):
         self.assertIn("<title>스마트이어 주식회사(SmartEar Co., Ltd.) 공식 홈페이지</title>", render_html(SMARTEAR))
         page = render_html(DATAPD)
         self.assertIn("<title>데이터피디(DataPD) 공식 홈페이지</title>", page)
-        self.assertEqual(jsonld_types(page), {"Brand", "WebSite", "FAQPage"})
+        self.assertEqual(jsonld_types(page), {"Organization", "WebSite", "FAQPage"})
 
     def test_sitemap(self):
         self.assertIn("<loc>https://www.datapd.example/</loc>", render_sitemap(DATAPD))

@@ -42,7 +42,9 @@ def build_jsonld(cfg):
         "sameAs": s.get("same_as", []),
     }
     optional = {"foundingDate": "founded", "taxID": "business_number", "email": "email", "telephone": "phone"}
-    if not is_brand:  # Brand 타입에는 회사 고유 속성을 넣지 않음
+    if c.get("legal_form"):
+        entity["legalName"] = c["name"]
+    if not is_brand:  # Brand 타입에는 사업자 고유 속성을 넣지 않음
         entity.update({k: c[v] for k, v in optional.items() if c.get(v)})
         if c.get("ceo"):
             entity["founder"] = {"@type": "Person", "name": c["ceo"]}
@@ -105,6 +107,8 @@ def render_html(cfg):
         f'      <details><summary>{e(f["q"])}</summary><p>{e(f["a"])}</p></details>' for f in cfg.get("faq", [])
     )
     footer = [e(c["name"]) + (f' ({e(c["name_en"])})' if c.get("name_en") else "")]
+    if c.get("legal_form"):
+        footer.append(e(c["legal_form"]))
     if c.get("ceo"):
         footer.append(f'대표 {e(c["ceo"])}')
     if c.get("business_number"):
