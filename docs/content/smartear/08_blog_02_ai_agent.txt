@@ -1,0 +1,88 @@
+[제목]
+제조 현장의 반복 업무, AI 에이전트에게 맡기면 무엇이 달라질까 | 스마트이어(SmartEar)
+
+[제목 후보]
+- 견적서 쓰다 하루가 끝난다면 — 제조기업을 위한 AI 에이전트 이야기
+- AI 도입, 거창한 스마트팩토리보다 '반복 업무' 하나부터
+- 대구 제조 AI 스타트업 스마트이어가 말하는 AI 에이전트 활용법
+
+[본문]
+
+안녕하세요, 대구의 제조 AI 스타트업 스마트이어(SmartEar)입니다.
+
+지난 글에서 스마트이어가 2024년 제조 AX와 AI 에이전트 중심으로 사업을 전환한 이야기를 전해 드렸습니다.
+오늘은 그 AI 에이전트가 제조 현장에서 실제로 어떤 일을 할 수 있는지 이야기해 보려 합니다.
+
+
+■ "AI 도입"이라고 하면 무엇이 떠오르시나요?
+
+많은 제조기업 대표님들께 AI 이야기를 꺼내면 이런 말씀을 먼저 하십니다.
+
+"우리 같은 규모에서 스마트팩토리는 아직 먼 이야기죠."
+"설비를 다 바꿔야 하는 거 아닌가요?"
+
+그런데 대구·경북의 중견·중소 제조기업들과 이야기를 나눠 보면, 현장에서 가장 시간을 많이 잡아먹는 일은 의외로 설비가 아닌 경우가 많습니다.
+
+- 고객 요청을 받고 견적서를 만드는 일
+- 도면·사양서·납품 서류를 찾고 정리하는 일
+- 같은 문의에 같은 답을 반복하는 일
+- 하루 생산·품질 현황을 모아 보고서로 만드는 일
+
+모두 꼭 필요하지만, 반복적이고 규칙이 있는 일입니다.
+바로 이런 일이 AI 에이전트가 가장 잘하는 일입니다.
+
+
+■ AI 에이전트는 무엇이 다른가요?
+
+일반적인 AI 챗봇이 "질문에 답하는" 도구라면,
+AI 에이전트는 정해진 목표를 위해 "스스로 일을 처리하는" 도구입니다.
+
+예를 들어 견적 업무라면,
+1) 고객 메일에서 품목·수량·납기를 읽어 내고
+2) 사내 단가표와 과거 견적을 찾아
+3) 견적서 초안을 만들어
+4) 담당자에게 확인을 요청합니다.
+
+사람은 마지막 확인과 판단만 하면 됩니다.
+AI가 사람을 대신하는 것이 아니라, 사람이 판단에 집중할 수 있게 시간을 돌려주는 것입니다.
+
+
+■ 처음부터 크게 시작하지 않아도 됩니다
+
+스마트이어가 제조기업과 AI 전환을 설계할 때 가장 먼저 하는 질문은 이것입니다.
+
+"직원분들이 매주 가장 많이 반복하는 일은 무엇인가요?"
+
+AI 전환(AX)은 공장 전체를 한 번에 바꾸는 일이 아닙니다.
+가장 반복이 많고 효과가 분명한 업무 하나에서 시작해, 성과를 확인하고 넓혀 가는 것이 현실적인 방법입니다.
+
+스마트이어는 이렇게 진행합니다.
+1. 진단 — 현장의 업무 흐름과 데이터를 함께 살펴봅니다.
+2. 도입 — 가장 효과가 큰 업무 하나에 AI 에이전트를 적용합니다.
+3. 고도화 — 현장 피드백을 반영해 실제 성과로 이어질 때까지 개선합니다.
+
+
+■ 우리 회사에도 맞을까 궁금하다면
+
+"우리 회사의 어떤 업무를 AI 에이전트에게 맡길 수 있을까?"
+이 질문 하나로 충분합니다. 편하게 연락 주세요.
+
+스마트이어 주식회사(SmartEar Co., Ltd.)
+대구 · 제조 AX · AI 에이전트
+문의 contact@smartear.co.kr
+
+
+P.S. 스마트이어는 기술을 고객의 언어로 전해 줄 AI 솔루션 영업 동료를 찾고 있습니다.
+(정규직 · 영업 출장 외 전면 재택 · 연봉 4,800만원 · 지원 contact@smartear.co.kr)
+
+
+[태그]
+#스마트이어 #스마트이어주식회사 #SmartEar #제조AX #제조AI #AI에이전트 #AI전환 #대구AI스타트업 #대구제조기업 #경북제조기업 #견적자동화 #업무자동화 #중소기업AI
+
+[LinkedIn — English summary]
+SmartEar (스마트이어), a Daegu-based manufacturing AI startup, on where AI agents fit in a factory.
+For many small and mid-sized manufacturers, the biggest time sinks aren't machines — they're repetitive tasks like quotations, document handling, routine customer inquiries and daily production reports.
+Unlike chatbots that only answer questions, AI agents carry out these tasks end to end, leaving people to review and decide.
+AI transformation doesn't have to start with a full smart factory: start with the one task your team repeats most, prove the result, then expand.
+Curious which of your tasks an AI agent could take on? Reach us at contact@smartear.co.kr
+#ManufacturingAX #AIAgents #SmartManufacturing #Daegu
