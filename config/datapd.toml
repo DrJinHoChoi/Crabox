@@ -1,0 +1,44 @@
+# 데이터피디 (브랜드/서비스) — TODO 항목을 실제 값으로 수정
+slug = "datapd"
+
+[company]
+type = "Brand"
+name = "데이터피디"
+name_en = "DataPD"
+alternate_names = ["DataPD", "데이터PD", "데이터 피디"]
+tagline = "데이터로 기획하고 성과로 증명합니다"   # TODO
+description = "데이터피디(DataPD)는 데이터 기반 콘텐츠·마케팅 기획 서비스입니다."  # TODO
+email = "hello@datapd.example"     # TODO
+phone = "+82-2-0000-0000"          # TODO
+
+[site]
+url = "https://www.datapd.example"          # TODO 브랜드 도메인
+logo = "https://www.datapd.example/logo.png"
+og_image = "https://www.datapd.example/og.png"
+naver_site_verification = ""
+google_site_verification = ""
+same_as = []   # 브랜드 공식 채널 (네이버 블로그, 유튜브, 인스타그램 등)
+
+[[related]]
+relation = "parent"
+name = "스마트이어 주식회사"
+url = "https://www.smartear.example"        # TODO
+
+[[services]]
+name = "데이터 기반 콘텐츠 기획"
+description = "검색·소셜 데이터를 분석해 성과가 나는 콘텐츠를 기획합니다."
+
+[[services]]
+name = "브랜드 마케팅 컨설팅"
+description = "타깃 분석부터 채널 전략까지 브랜드 성장을 설계합니다."
+
+[[faq]]
+q = "데이터피디는 어떤 서비스인가요?"
+a = "데이터피디(DataPD)는 데이터 분석을 바탕으로 콘텐츠와 마케팅을 기획하는 서비스입니다."
+
+[monitor]
+# '데이터 PD'는 일반 직무명으로도 쓰여 잡음이 많으므로 붙여 쓴 형태 위주
+queries = ["데이터피디", "DataPD", "데이터PD"]
+# 서비스·고객 관련 부정 신호
+negative_keywords = ["사기", "피해", "환불", "먹튀", "불만", "최악", "후기 안좋", "주의", "연락두절", "과장", "허위", "효과 없"]
+positive_keywords = ["추천", "만족", "성과", "후기 좋", "재계약", "효과"]

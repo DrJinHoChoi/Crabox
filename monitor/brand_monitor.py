@@ -8,7 +8,8 @@
   2) export NAVER_CLIENT_ID=... NAVER_CLIENT_SECRET=...
 
 사용법:
-  python -m monitor.brand_monitor [--config config/brand.toml] [--out reports]
+  python -m monitor.brand_monitor                         # config/*.toml 각각 따로 리포트
+  python -m monitor.brand_monitor --config config/datapd.toml
 """
 
 import argparse
@@ -92,8 +93,8 @@ def collect(cfg, client_id, client_secret):
     return rows
 
 
-def write_reports(rows, out_dir):
-    out = Path(out_dir)
+def write_reports(rows, out_dir, slug, name):
+    out = Path(out_dir) / slug
     out.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d_%H%M")
     csv_path = out / f"brand_mentions_{stamp}.csv"
@@ -103,7 +104,7 @@ def write_reports(rows, out_dir):
         w.writerows(rows)
 
     counts = {k: sum(r["분류"] == k for r in rows) for k in ("부정", "긍정", "중립")}
-    lines = [f"# 브랜드 모니터링 리포트 ({stamp})", "",
+    lines = [f"# {name} 모니터링 리포트 ({stamp})", "",
              f"- 전체 {len(rows)}건 · 부정 {counts['부정']} · 긍정 {counts['긍정']} · 중립 {counts['중립']}", ""]
     neg = [r for r in rows if r["분류"] == "부정"]
     if neg:
@@ -117,18 +118,20 @@ def write_reports(rows, out_dir):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--config", default="config/brand.toml")
+    ap.add_argument("--config", action="append", help="생략 시 config/*.toml 전부")
     ap.add_argument("--out", default="reports")
     args = ap.parse_args()
 
     cid, secret = os.environ.get("NAVER_CLIENT_ID"), os.environ.get("NAVER_CLIENT_SECRET")
     if not (cid and secret):
         raise SystemExit("NAVER_CLIENT_ID / NAVER_CLIENT_SECRET 환경변수를 설정하세요. (developers.naver.com)")
-    with open(args.config, "rb") as f:
-        cfg = tomllib.load(f)
-    rows = collect(cfg, cid, secret)
-    csv_path, md_path, counts = write_reports(rows, args.out)
-    print(f"수집 {len(rows)}건 (부정 {counts['부정']}) → {csv_path}, {md_path}")
+    for path in args.config or sorted(Path("config").glob("*.toml")):
+        with open(path, "rb") as f:
+            cfg = tomllib.load(f)
+        name = cfg["company"]["name"]
+        rows = collect(cfg, cid, secret)
+        csv_path, md_path, counts = write_reports(rows, args.out, cfg["slug"], name)
+        print(f"[{name}] 수집 {len(rows)}건 (부정 {counts['부정']}) → {csv_path}, {md_path}")
 
 
 if __name__ == "__main__":

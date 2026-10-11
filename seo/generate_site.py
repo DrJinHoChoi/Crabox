@@ -1,12 +1,13 @@
-"""config/brand.toml 을 읽어 검색엔진 최적화된 공식 랜딩 페이지를 생성한다.
+"""config/*.toml 을 읽어 엔티티(회사/브랜드)별로 검색엔진 최적화된 공식 랜딩 페이지를 따로 생성한다.
 
-생성물 (site/):
-  index.html   - title/description/OG 메타, schema.org JSON-LD(Organization, WebSite, FAQPage)
+생성물 (site/<slug>/):
+  index.html   - title/description/OG 메타, schema.org JSON-LD(Organization|Brand, WebSite, FAQPage)
   robots.txt   - 크롤링 허용 + sitemap 위치
   sitemap.xml  - 네이버 서치어드바이저 / 구글 서치콘솔 제출용
 
 사용법:
-  python -m seo.generate_site [--config config/brand.toml] [--out site]
+  python -m seo.generate_site                       # config/*.toml 전부 (스마트이어, 데이터피디 각각)
+  python -m seo.generate_site --config config/datapd.toml
 """
 
 import argparse
@@ -16,52 +17,66 @@ import tomllib
 from datetime import date
 from pathlib import Path
 
+# related.relation → schema.org 속성
+RELATION_PROPS = {"brand": "brand", "parent": "parentOrganization", "sub": "subOrganization"}
+
 
 def load_config(path):
     with open(path, "rb") as f:
         return tomllib.load(f)
 
 
+def _names(c):
+    return list(dict.fromkeys(n for n in [c.get("name_en"), *c.get("alternate_names", [])] if n and n != c["name"]))
+
+
 def build_jsonld(cfg):
     c, s = cfg["company"], cfg["site"]
-    org = {
+    is_brand = c.get("type") == "Brand"
+    entity = {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": c["legal_name"],
-        "alternateName": [c["brand"], c["brand_en"], c["legal_name_en"], *c.get("alternate_names", [])],
+        "@type": "Brand" if is_brand else "Organization",
+        "name": c["name"],
+        "alternateName": _names(c),
         "url": s["url"],
         "logo": s["logo"],
         "description": c["description"],
-        "foundingDate": c["founded"],
-        "founder": {"@type": "Person", "name": c["ceo"]},
-        "taxID": c["business_number"],
-        "email": c["email"],
-        "telephone": c["phone"],
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": c["address_street"],
-            "addressLocality": c["address_locality"],
-            "postalCode": c["postal_code"],
-            "addressCountry": "KR",
-        },
-        "brand": {"@type": "Brand", "name": c["brand"], "alternateName": c["brand_en"]},
         "sameAs": s.get("same_as", []),
-        "makesOffer": [
-            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": sv["name"], "description": sv["description"]}}
-            for sv in cfg.get("services", [])
-        ],
     }
-    # 중복 제거 (순서 유지)
-    org["alternateName"] = list(dict.fromkeys(n for n in org["alternateName"] if n and n != c["legal_name"]))
+    optional = {"foundingDate": "founded", "taxID": "business_number", "email": "email", "telephone": "phone"}
+    if not is_brand:  # Brand 타입에는 회사 고유 속성을 넣지 않음
+        entity.update({k: c[v] for k, v in optional.items() if c.get(v)})
+        if c.get("ceo"):
+            entity["founder"] = {"@type": "Person", "name": c["ceo"]}
+        if c.get("address_street"):
+            entity["address"] = {
+                "@type": "PostalAddress",
+                "streetAddress": c["address_street"],
+                "addressLocality": c.get("address_locality", ""),
+                "postalCode": c.get("postal_code", ""),
+                "addressCountry": "KR",
+            }
+        if cfg.get("services"):
+            entity["makesOffer"] = [
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": sv["name"], "description": sv["description"]}}
+                for sv in cfg["services"]
+            ]
+    for r in cfg.get("related", []):
+        prop = RELATION_PROPS[r["relation"]]
+        if prop == "parentOrganization" and is_brand:
+            prop = "subjectOf"  # Brand 에는 parentOrganization 이 없어 운영 주체를 subjectOf 로 연결
+        node = {"@type": "Brand" if r["relation"] == "brand" else "Organization", "name": r["name"], "url": r["url"]}
+        entity.setdefault(prop, []).append(node)
+
     website = {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": f'{c["brand"]} | {c["legal_name"]}',
-        "alternateName": c["brand_en"],
+        "name": c["name"],
+        "alternateName": _names(c),
         "url": s["url"],
         "inLanguage": "ko-KR",
     }
-    blocks = [org, website]
+    blocks = [entity, website]
     if cfg.get("faq"):
         blocks.append({
             "@context": "https://schema.org",
@@ -77,9 +92,9 @@ def build_jsonld(cfg):
 def render_html(cfg):
     c, s = cfg["company"], cfg["site"]
     e = html.escape
-    title = f'{c["brand"]}({c["brand_en"]}) | {c["legal_name"]} 공식 홈페이지'
+    title = f'{c["name"]}({c["name_en"]}) 공식 홈페이지' if c.get("name_en") else f'{c["name"]} 공식 홈페이지'
     desc = c["description"]
-    keywords = ", ".join(dict.fromkeys([c["legal_name"], c["brand"], c["brand_en"], *c.get("alternate_names", [])]))
+    keywords = ", ".join([c["name"], *_names(c)])
 
     verify = ""
     if s.get("naver_site_verification"):
@@ -97,6 +112,19 @@ def render_html(cfg):
     faqs = "\n".join(
         f'      <details><summary>{e(f["q"])}</summary><p>{e(f["a"])}</p></details>' for f in cfg.get("faq", [])
     )
+    labels = {"brand": "운영 브랜드", "parent": "운영사", "sub": "자회사"}
+    related = " · ".join(
+        f'{labels[r["relation"]]} <a href="{e(r["url"])}">{e(r["name"])}</a>' for r in cfg.get("related", [])
+    )
+    footer = [e(c["name"]) + (f' ({e(c["name_en"])})' if c.get("name_en") else "")]
+    if c.get("ceo"):
+        footer.append(f'대표 {e(c["ceo"])}')
+    if c.get("business_number"):
+        footer.append(f'사업자등록번호 {e(c["business_number"])}')
+    contact = [x for x in (
+        f'{c.get("address_locality", "")} {c.get("address_street", "")}'.strip(), c.get("phone"), c.get("email")
+    ) if x]
+    sub = f' <small>({e(c["name_en"])})</small>' if c.get("name_en") else ""
     return f"""<!doctype html>
 <html lang="ko">
 <head>
@@ -107,7 +135,7 @@ def render_html(cfg):
   <meta name="keywords" content="{e(keywords)}">
   <link rel="canonical" href="{e(s["url"])}/">
 {verify}  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="{e(c["brand"])}">
+  <meta property="og:site_name" content="{e(c["name"])}">
   <meta property="og:title" content="{e(title)}">
   <meta property="og:description" content="{e(desc)}">
   <meta property="og:url" content="{e(s["url"])}/">
@@ -126,8 +154,8 @@ def render_html(cfg):
 </head>
 <body>
   <header>
-    <h1>{e(c["brand"])} <small>({e(c["brand_en"])})</small></h1>
-    <p><strong>{e(c["legal_name"])}</strong> — {e(c["tagline"])}</p>
+    <h1>{e(c["name"])}{sub}</h1>
+    <p><strong>{e(c["tagline"])}</strong></p>
     <p>{e(desc)}</p>
   </header>
   <section>
@@ -141,8 +169,9 @@ def render_html(cfg):
 {faqs}
   </section>
   <footer>
-    <p>{e(c["legal_name"])} ({e(c["legal_name_en"])}) · 대표 {e(c["ceo"])} · 사업자등록번호 {e(c["business_number"])}</p>
-    <p>{e(c["address_locality"])} {e(c["address_street"])} · {e(c["phone"])} · {e(c["email"])}</p>
+    <p>{" · ".join(footer)}</p>
+    <p>{" · ".join(e(x) for x in contact)}</p>
+    <p>{related}</p>
   </footer>
 </body>
 </html>
@@ -161,19 +190,25 @@ def render_sitemap(cfg, pages=("/",)):
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n'
 
 
-def main():
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--config", default="config/brand.toml")
-    ap.add_argument("--out", default="site")
-    args = ap.parse_args()
-
-    cfg = load_config(args.config)
-    out = Path(args.out)
+def generate(config_path, out_root):
+    cfg = load_config(config_path)
+    out = Path(out_root) / cfg["slug"]
     out.mkdir(parents=True, exist_ok=True)
     (out / "index.html").write_text(render_html(cfg), encoding="utf-8")
     (out / "robots.txt").write_text(render_robots(cfg), encoding="utf-8")
     (out / "sitemap.xml").write_text(render_sitemap(cfg), encoding="utf-8")
-    print(f"생성 완료: {out}/index.html, robots.txt, sitemap.xml")
+    return cfg["company"]["name"], out
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--config", action="append", help="생략 시 config/*.toml 전부")
+    ap.add_argument("--out", default="site")
+    args = ap.parse_args()
+
+    for path in args.config or sorted(Path("config").glob("*.toml")):
+        name, out = generate(path, args.out)
+        print(f"[{name}] 생성 완료: {out}/index.html, robots.txt, sitemap.xml")
 
 
 if __name__ == "__main__":
