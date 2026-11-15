@@ -1,0 +1,69 @@
+[블로그 3번째 이야기 — 브랜드 스토리]
+
+[제목]
+스마트이어(SmartEar)라는 이름에 담긴 뜻 — 설비와 사람을 '잇다'
+
+[본문]
+
+안녕하세요, 대구의 제조 AI 스타트업 스마트이어(SmartEar)입니다.
+
+"스마트이어요? 귀(ear) 관련 회사인가요?"
+처음 인사드리면 자주 듣는 질문입니다.
+
+스마트이어의 '이어'는 '잇다'에서 왔습니다.
+스마트하게 잇는 회사. 그것이 스마트이어라는 이름의 뜻입니다.
+
+
+■ 공장에는 이미 많은 것이 있습니다
+
+대구·경북의 제조기업들을 만나 보면, 공장에는 이미 많은 것이 갖춰져 있습니다.
+오랫동안 써 온 장비와 설비, 업무에 쓰는 여러 시스템,
+그리고 무엇보다 현장을 누구보다 잘 아는 사람들이 있습니다.
+
+문제는 이것들이 서로 따로 움직인다는 점입니다.
+설비의 상태는 설비에, 업무 기록은 시스템에, 노하우는 사람의 머릿속에 흩어져 있습니다.
+그 사이를 사람이 직접 오가며 확인하고, 옮겨 적고, 전달합니다.
+
+
+■ 바꾸는 대신, 잇습니다
+
+AI 전환이라고 하면 많은 분들이 "설비를 다 바꿔야 하나요?"라고 먼저 물으십니다.
+
+스마트이어의 답은 "아니요"입니다.
+스마트이어는 이미 있는 장비·설비와 임직원을 그대로 두고,
+그 사이를 AI 에이전트로 이어 주는 제조 운영 시스템을 만들고 있습니다.
+
+따로 움직이던 설비와 시스템과 사람이 이어지면,
+필요한 정보가 필요한 사람에게 제때 닿는 현장이 됩니다.
+
+
+■ 잇는 회사는 먼저 잘 이어져 있어야 합니다
+
+스마트이어 구성원은 영업 출장을 제외하고 전면 재택으로 일합니다.
+떨어져 일하기에 더 자주, 더 분명하게 소통하는 것을 가장 중요한 원칙으로 삼고 있습니다.
+설비와 사람을 잇는 회사라면, 먼저 우리부터 잘 이어져 있어야 하니까요.
+
+
+■ 함께 이어갈 분을 찾습니다
+
+설비와 사람을 잇는 회사에는, 고객과 기술을 잇는 사람이 필요합니다.
+스마트이어는 AI 솔루션 영업 동료를 찾고 있습니다.
+(정규직 · 수습 3개월 · 영업 출장 외 전면 재택 · 출장비 지원 · 연봉 4,800만원)
+
+우리 공장의 무엇을 어떻게 이을 수 있을지 궁금하시다면, 편하게 연락 주세요.
+
+스마트이어 주식회사(SmartEar Co., Ltd.)
+대구 · AI 에이전트 제조 운영 시스템
+문의·지원 contact@smartear.co.kr
+
+
+[태그]
+#스마트이어 #스마트이어주식회사 #SmartEar #스마트이어뜻 #제조운영시스템 #AI에이전트 #제조AX #대구AI스타트업 #대구제조기업 #경북제조기업 #설비연결 #스마트팩토리
+
+[LinkedIn — English summary]
+What's in a name? In Korean, "ieo" (이어) means "to connect." SmartEar (스마트이어) means connecting things smartly.
+Factories already have machines, systems and experienced people — but they often work in silos.
+Instead of replacing equipment, SmartEar, a Daegu-based manufacturing AI startup, is building an AI agent-based operations system that connects existing equipment, business systems and employees.
+When they're connected, the right information reaches the right person at the right time.
+Interested in what your factory could connect? contact@smartear.co.kr
+#ManufacturingAI #AIAgents #SmartFactory #Daegu
