@@ -1,0 +1,77 @@
+[제목]
+대구 제조업은 지금 AI로 '운영'을 바꾸는 중입니다 | 스마트이어(SmartEar)
+
+[제목 후보]
+- 2026년 대구·경북 제조 AI 전환, 무엇이 움직이고 있나
+- 대구 제조 AX 흐름 정리 — 설비 교체보다 '운영'이 먼저인 이유
+
+[본문]
+
+안녕하세요, 대구의 제조 AI 스타트업 스마트이어(SmartEar)입니다.
+
+올해 대구·경북 제조업에서는 AI 전환(AX)과 관련된 소식이 유난히 많았습니다.
+오늘은 공개된 기사들을 바탕으로 지역 제조 AI의 흐름을 정리하고, 그 안에서 스마트이어가 주목하는 지점을 나눠 보려 합니다.
+
+
+■ 1. 지역 차원의 투자가 시작됐습니다
+
+대구시는 2025년부터 3년간 총 120억 원을 들여, 기계부품·소재부품 분야 기업의 제조 현장에 AI를 도입하는 사업을 추진하고 있습니다.
+주물·단조·사출·절삭·가공 같은 뿌리산업이 주요 대상이고, 지역 기업이 쉽게 쓸 수 있는 제조 데이터 수집 체계와 제조 AI 서비스 플랫폼도 함께 구축합니다.
+
+
+■ 2. 큰 공장들도 '운영 체계'부터 바꾸고 있습니다
+
+대동은 대구 트랙터 공장에서 2029년까지 이어지는 제조 AX 계획을 진행하고 있습니다.
+생산·물류 재구성, 새 AX 생산라인 구축, 기존 라인의 AX 전환과 함께 "데이터와 AI 기반의 공장 운영 체계"를 세우는 것이 핵심 전략 중 하나로 소개됐습니다.
+
+눈여겨볼 점은, 새 설비를 들이는 것만큼 기존 라인과 공장 운영 방식을 바꾸는 일이 중요하게 다뤄진다는 것입니다.
+
+
+■ 3. 지역 AI 스타트업 생태계가 커지고 있습니다
+
+- 대구 C-Lab 18기에는 15개사가 선발됐고, 그중 7개사가 기존 산업의 AI 전환을 지원하는 AX 분야 기업입니다.
+- 대구창조경제혁신센터는 'AX 창업위원회'를 출범시켜 AI 창업으로 지역 산업을 바꾸겠다는 방향을 밝혔습니다.
+- 지난 10월 엑스코에서 열린 FIX 2026에는 13개국 274개사가 참가해 AI 자율제조 기술을 선보였습니다.
+
+대구는 이제 제조 AI를 "쓰는" 도시이면서, 동시에 "만드는" 도시가 되어 가고 있습니다.
+
+
+■ 스마트이어가 이 흐름에서 주목하는 것
+
+이 소식들을 관통하는 한 가지는, 제조 AI 전환이 결국 '운영'의 문제라는 점입니다.
+
+대구·경북의 중견·중소 제조기업들과 이야기를 나눠 보면, 공장에는 이미 오래 써 온 장비와 설비, 여러 업무 시스템, 그리고 현장을 잘 아는 사람들이 있습니다.
+문제는 이것들이 서로 따로 움직인다는 것입니다.
+
+스마트이어는 기존 장비·설비를 바꾸는 대신, 설비와 업무 시스템과 임직원 사이를 AI 에이전트로 잇는 제조 운영 시스템을 만들어 가고 있습니다.
+대형 공장이 수년에 걸쳐 세우는 "데이터와 AI 기반 운영 체계"를, 중견·중소 제조기업도 지금 가진 것에서 출발해 갖출 수 있도록 하는 것이 목표입니다.
+
+
+■ 우리 공장의 운영, 무엇부터 이을 수 있을까요?
+
+지역 지원 사업, 설비 투자, 시스템 도입 사이에서 무엇부터 해야 할지 고민이시라면 편하게 연락 주세요.
+스마트이어가 현장의 장비, 데이터, 업무 흐름을 함께 살펴보겠습니다.
+
+스마트이어 주식회사(SmartEar Co., Ltd.)
+대구 · AI 에이전트 제조 운영 시스템
+문의 contact@smartear.co.kr
+
+
+[참고 기사]
+- 대구시 지역 제조현장 AI 혁신, 3년간 120억 원 (스마트시티, 2026.2)
+- 대동, 대구공장 제조 AX 착수 (디지털투데이)
+- 대구 C-Lab 18기, AX 스타트업 15개사 육성 (벤처스퀘어)
+- 대구, AI 창업으로 산업 바꾼다… AX 창업위원회 출범 (벤처스퀘어)
+- 대구 제조업, AI 자율제조로 미래 연다… 13개국 274개사 (아이뉴스24)
+※ 게시 전 각 기사 원문의 수치·일정을 한 번 더 확인해 주세요.
+
+
+[태그]
+#스마트이어 #SmartEar #대구제조업 #대구AI #경북제조업 #제조AX #제조AI #AI전환 #스마트팩토리 #제조운영시스템 #AI에이전트 #대구AI스타트업 #FIX2026 #뿌리산업
+
+[LinkedIn — English summary]
+Daegu's manufacturing sector is moving fast on AI transformation (AX): the city is investing KRW 12 billion over three years to bring AI to machinery and materials-parts makers, and Daedong is building a data- and AI-based operating system at its Daegu tractor plant.
+The local AI startup ecosystem is growing too, from Daegu C-Lab's AX cohort to FIX 2026, which drew 274 companies from 13 countries.
+The common thread: manufacturing AX is ultimately about operations, not just new equipment.
+SmartEar (스마트이어), a Daegu-based manufacturing AI startup, is building an AI agent-based operations system that connects existing equipment, business systems and people — so small and mid-sized manufacturers can start from what they already have.
+contact@smartear.co.kr #Daegu #ManufacturingAX #AIAgents #SmartFactory
